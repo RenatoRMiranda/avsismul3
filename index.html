@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="PT">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <link rel="shortcut icon" href="img/huno-logo.png" />
+
+    <title>Space Invaders</title>
+</head>
+
+<body style="background-color: black;">
+
+    <svg width="500" height="500">
+
+        <rect x = "90" y = "60" width = "20" height = "270" fill="black" id="laser1"/>
+        <rect x = "190" y = "60" width = "20" height = "270" fill="black" id="laser2"/>
+        <rect x = "290" y = "60" width = "20" height = "270" fill="black" id="laser3"/>
+        
+        <circle cx="100" cy="45" r="25" stroke="red" stroke-width="2" fill="none" id="asteroid1"/>
+        <circle cx="200" cy="45" r="25" stroke="red" stroke-width="2" fill="none" id="asteroid2"/>
+        <circle cx="300" cy="45" r="25" stroke="red" stroke-width="2" fill="none" id="asteroid3"/>
+
+        <path d=" M 100 340
+            L 80 380
+            L 120 380
+            L 100 340"
+            stroke="black" stroke-width="2" fill="none" id="ship1"/>
+        <path d=" M 200 340
+            L 180 380
+            L 220 380
+            L 200 340"
+            stroke="red" stroke-width="2" fill="none" id="ship2"/>
+        <path d=" M 300 340
+            L 280 380
+            L 320 380
+            L 300 340"
+            stroke="black" stroke-width="2" fill="none" id="ship3"/>
+    </svg>
+
+    <button onclick="left()">🠈</button>
+    
+    <button onclick="right()">🠊</button>
+    
+    <button onclick="shoot()">☄</button>
+    <br>
+    <div style="display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: space-around;">
+
+    </div>
+    <span style="font-family:'Courier New', Courier, monospace;
+    font-size: 20px; color: white">SCORE: </span>
+    <span style="font-family:'Courier New', Courier, monospace;
+    font-size: 30px; color: white" id="scoreShown"></span>
+
+    <script>
+        var pos = 2;
+        var ast1 = 1, ast2 = 1, ast3 = 1;
+        var score = 0;
+        function left () {
+            switch (pos) {
+                case 1:
+                    break;
+                case 2:
+                    d3.select("#ship1").transition().attr("stroke", "red");
+                    d3.select("#ship2").transition().attr("stroke", "black");
+                    pos--;
+                    break;
+                case 3:
+                    d3.select("#ship2").transition().attr("stroke", "red");
+                    d3.select("#ship3").transition().attr("stroke", "black");
+                    pos--;
+                    break;
+                default:
+                    break;
+            }
+            return;
+        }
+
+        function right () {
+            switch (pos) {
+                case 1:
+                    d3.select("#ship1").transition().attr("stroke", "black");
+                    d3.select("#ship2").transition().attr("stroke", "red");
+                    pos++;
+                    break;
+                case 2:
+                    d3.select("#ship2").transition().attr("stroke", "black");
+                    d3.select("#ship3").transition().attr("stroke", "red");
+                    pos++;
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            return;
+        }
+
+        function shoot () {
+            switch (pos) {
+                case 1:
+                    d3.select("#laser1").transition().duration(200).attr("fill", "red");
+                    d3.select("#laser1").transition().duration(800).delay(200).attr("fill", "black");
+                    if (ast1) {
+                        d3.select("#asteroid1").transition().duration(200).delay(200).attr("stroke", "black");
+                        d3.select("#asteroid1").transition().duration(200).delay(200).attr("fill", "red");
+                        d3.select("#asteroid1").transition().duration(100).delay(400).attr("stroke", "red");
+                        d3.select("#asteroid1").transition().duration(100).delay(400).attr("fill", "black");
+                        d3.select("#asteroid1").transition().duration(100).delay(500).attr("stroke", "black");
+                        ast1 = 0;
+                        score++;
+                    }
+                    break;
+                case 2:
+                    d3.select("#laser2").transition().duration(200).attr("fill", "red");
+                    d3.select("#laser2").transition().duration(800).delay(200).attr("fill", "black");
+                    if (ast2) {
+                        d3.select("#asteroid2").transition().duration(200).delay(200).attr("stroke", "black");
+                        d3.select("#asteroid2").transition().duration(200).delay(200).attr("fill", "red");
+                        d3.select("#asteroid2").transition().duration(100).delay(400).attr("stroke", "red");
+                        d3.select("#asteroid2").transition().duration(100).delay(400).attr("fill", "black");
+                        d3.select("#asteroid2").transition().duration(100).delay(500).attr("stroke", "black");
+                        ast2 = 0;
+                        score++;
+                    }
+                    break;
+                case 3:
+                    d3.select("#laser3").transition().duration(200).attr("fill", "red");
+                    d3.select("#laser3").transition().duration(800).delay(200).attr("fill", "black");
+                    if (ast3) {
+                        d3.select("#asteroid3").transition().duration(200).delay(200).attr("stroke", "black");
+                        d3.select("#asteroid3").transition().duration(200).delay(200).attr("fill", "red");
+                        d3.select("#asteroid3").transition().duration(100).delay(400).attr("stroke", "red");
+                        d3.select("#asteroid3").transition().duration(100).delay(400).attr("fill", "black");
+                        d3.select("#asteroid3").transition().duration(100).delay(500).attr("stroke", "black");
+                        ast3 = 0;
+                        score++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            document.getElementById("scoreShown").innerHTML = score;
+            if (score ==3 ){
+                setTimeout( function () {
+                    window.alert("VOCÊ É UM VERDADEIRO HERÓI")
+                    } , 800);
+            }
+            return;
+        }
+    </script>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+</body>
+
+</html>
